@@ -64,8 +64,8 @@ class IpValidationJsonController implements ContainerInjectableInterface
     //     <p>\$db is '{$this->db}'.
     // EOD;
     // }
-    
-    
+
+
     /**
      * The initialize method is optional and will always be called before the
      * target method/action. This is a convienient method where you could
@@ -86,7 +86,7 @@ class IpValidationJsonController implements ContainerInjectableInterface
     * ANY METHOD mountpoint/
     * ANY METHOD mountpoint/index
     *
-    * @return string
+    * @return array
     */
     public function indexActionGet() : array
     {
@@ -96,7 +96,7 @@ class IpValidationJsonController implements ContainerInjectableInterface
 
         $ipAddress = new IpValidation($iptocheck);
 
-             
+
         $data = $ipAddress->answer();
 
         return [$data];
@@ -109,7 +109,7 @@ class IpValidationJsonController implements ContainerInjectableInterface
     * ANY METHOD mountpoint/
     * ANY METHOD mountpoint/index
     *
-    * @return string
+    * @return array
     */
     public function indexActionPost() : array
     {
@@ -119,7 +119,7 @@ class IpValidationJsonController implements ContainerInjectableInterface
         // var_dump($post);
 
         $ipAddress = new IpValidation($iptocheck);
-  
+
         $data = $ipAddress->answer();
 
         return [$data];
