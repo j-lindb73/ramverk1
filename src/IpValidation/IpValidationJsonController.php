@@ -67,12 +67,12 @@ class IpValidationJsonController implements ContainerInjectableInterface
 
 
     /**
-     * The initialize method is optional and will always be called before the
-     * target method/action. This is a convienient method where you could
-     * setup internal properties that are commonly used by several methods.
-     *
-     * @return void
-     */
+    * The initialize method is optional and will always be called before the
+    * target method/action. This is a convienient method where you could
+    * setup internal properties that are commonly used by several methods.
+    *
+    * @return void
+    */
     public function initialize() : void
     {
         // Use to initialise member variables.
