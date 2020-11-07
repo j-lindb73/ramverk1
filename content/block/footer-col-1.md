@@ -1,3 +1,5 @@
-#### Footer col 1
+#### Test och kodtäckning
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+[Travis](https://travis-ci.org/)
+
+[Scrutinizer](https://scrutinizer-ci.com)
