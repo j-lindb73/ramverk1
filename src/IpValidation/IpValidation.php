@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Anax\IpValidation;
+namespace Lefty\IpValidation;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;

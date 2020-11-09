@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\IpValidation;
+namespace Lefty\IpValidation;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
