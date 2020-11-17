@@ -87,14 +87,24 @@ class IpValidationController implements ContainerInjectableInterface
     */
     public function indexActionGet() : object
     {
+
+        $localIP = new IpGetLocalIP();
+
+        // var_dump($_SERVER);
+        // var_dump($localIP->getLocalIP());
+        $data = [
+            "ip" => $localIP->getLocalIP(),
+        ];
+        
+        // var_dump($_SERVER);
         $page = $this->di->get("page");
 
         $title = "IP Validation | ramverk1";
 
-        $page->add("ip/index");
+        $page->add("ip/index", $data);
 
         return $page->render([
-            "title" => $title,
+            "title" => $title
         ]);
     }
 
@@ -122,7 +132,11 @@ class IpValidationController implements ContainerInjectableInterface
 
         $page->add("ip/index");
 
-        $page->add("ip/validate", $data);
+        if ($ipAddress->isValid()) {
+            $page->add("ip/validIP", $data);
+        } else {
+            $page->add("ip/notvalidIP", $data);
+        }
 
         return $page->render([
             "title" => $title,

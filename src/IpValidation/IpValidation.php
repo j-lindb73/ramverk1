@@ -32,11 +32,15 @@ class IpValidation implements ContainerInjectableInterface
     private $isValidIPv6 = false;
     private $isValidMessage = " is not a valid IP";
     private $hostname;
+    private $geoLocation = [];
 
     public function __construct(string $value)
     {
         $this->ipAddress = $value;
         $this->validate();
+        if ($this->isValidIPv4) {
+            $this->geoLocation($this->ipAddress);
+        }
     }
     
     
@@ -49,6 +53,13 @@ class IpValidation implements ContainerInjectableInterface
             $this->isValidMessage = " is a valid IP address";
             $this->hostname = gethostbyaddr($this->ipAddress);
         }
+    }
+
+    public function geoLocation($ipAddress)
+    {
+        $ipGeoLocation = new IpGeoLocation($ipAddress);
+
+        $this->geoLocation = $ipGeoLocation->getGeoLocation();
     }
 
     public function isValidIPv4()
@@ -71,6 +82,11 @@ class IpValidation implements ContainerInjectableInterface
         return $this->ipAddress;
     }
 
+    public function getGeoLocation()
+    {
+        return $this->geoLocation;
+    }
+
     public function getHostname()
     {
         return $this->hostname;
@@ -91,7 +107,8 @@ class IpValidation implements ContainerInjectableInterface
             "isValidIPv6" => $this->isValidIPv6(),
             "isValidMessage" => $this->isValidMessage(),
             "ip" => $this->getIp(),
-            "hostname" => $this->getHostname()
+            "hostname" => $this->getHostname(),
+            "geoLocation" => $this->getGeoLocation()
             ];
         
         return $data;

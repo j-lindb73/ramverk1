@@ -76,6 +76,24 @@ class IpValidationControllerTest extends TestCase
     }
 
     /**
+     * Test the route "index".
+     */
+    public function testIndexActionPostBadIp()
+    {
+        $request = $this->di->get("request");
+        $request->setPost("ip", "8.8.8.8.8");
+        // var_dump($request);
+
+        $res = $this->controller->indexActionPost();
+
+        $body = $res->getBody();
+
+        // var_dump($body);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+        $this->assertContains("is not a valid IP", $body);
+    }
+
+    /**
      * Test the method "catchAll".
      */
     // public function testCatchAll()

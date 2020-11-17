@@ -10,27 +10,20 @@ namespace Anax\View;
 // echo showEnvironment(get_defined_vars(), get_defined_functions());
 
 
+// var_dump($geoLocation);
+// echo $geoLocation;
+
 // if (!$resultset) {
 //     return;
 // }
 // ?>
-<fieldset>
-    <legend>IP Validation</legend>
+<h2>IP Validation</h2>
+<div class="flex-container">
+    <div>
+        <h3><?= $ip . $isValidMessage; ?>
 
-    <h3><?= $ip . $isValidMessage; ?>
-<?php
-if ($isValidIPv4) {
-      echo " (IPv4)";
-} elseif ($isValidIPv6) {
-    echo " (IPv6)";
-}
-?>
-</h3>
-
-    <p>
-        Hostname: <?= $hostname ?>
-
-
-</fieldset>
-
+        </h3>
+    </div>
+        
+</div>
 

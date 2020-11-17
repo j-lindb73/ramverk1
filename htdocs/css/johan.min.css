@@ -39,8 +39,13 @@ h1 {
     display: none;
 }
 
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
 
-.dice-container {
+.ip-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -142,6 +147,12 @@ h1 {
     color: white;
 }
 
+#map {
+    border: 1px solid black;
+    height: 200px;
+    width: 200px;
+    z-index: 0;
+}
 
 
  

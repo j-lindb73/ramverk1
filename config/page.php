@@ -20,6 +20,7 @@ return [
             "stylesheets" => [
                 // "css/dbwebb-se.min.css",
                 "css/johan.min.css",
+                "https://unpkg.com/leaflet@1.6.0/dist/leaflet.css",
             ],
             "javascripts" => [
                 "js/responsive-menu.js",
