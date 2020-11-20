@@ -45,6 +45,10 @@ h1 {
     justify-content: space-evenly;
   }
 
+.center-text {
+    text-align: center;
+}
+
 .ip-container {
     display: flex;
     align-items: center;
