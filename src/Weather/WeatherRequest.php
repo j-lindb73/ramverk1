@@ -38,6 +38,43 @@ class WeatherRequest implements ContainerInjectableInterface
         $this->geoCloseCurl();
     }
 
+    public function checkWeatherMulti(string $latitude, string $longitude)
+    {
+        $multiRequests = [];
+
+        for ($i=0; $i < 5; $i++) {
+            $unixTime = time() - ($i * 24 * 60 * 60);
+      
+            $multiRequests[] = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' . $latitude . '&lon=' .$longitude .'&dt=' . $unixTime . '&units=metric&appid=' . $this->apiKey;
+        }
+
+        $multiHandle = curl_multi_init();
+        $curlArray = array();
+
+        foreach ($multiRequests as $i => $url) {
+            $curlArray[$i] = curl_init($url);
+            curl_setopt($curlArray[$i], CURLOPT_RETURNTRANSFER, true);
+            curl_multi_add_handle($multiHandle, $curlArray[$i]);
+        }
+
+        $running = null;
+        do {
+            usleep(10000);
+            curl_multi_exec($multiHandle, $running);
+        } while ($running > 0);
+
+        $res = array();
+        foreach ($multiRequests as $i => $url) {
+            $res[$i] = json_decode(curl_multi_getcontent($curlArray[$i]));
+        }
+       
+        foreach ($multiRequests as $i => $url) {
+            curl_multi_remove_handle($multiHandle, $curlArray[$i]);
+        }
+        curl_multi_close($multiHandle);
+        return $res;
+    }
+
     private function geoInitCurl()
     {
         $this->curl = curl_init();
@@ -45,7 +82,7 @@ class WeatherRequest implements ContainerInjectableInterface
  
     private function geoSetOptCurl($latitude, $longitude)
     {
-        // curl_setopt($this->curl, CURLOPT_URL, "http://api.ipstack.com/" . $ipAddress . "?access_key=" . $this->apiKey ."&fields=latitude,longitude,city");
+
         curl_setopt($this->curl, CURLOPT_URL, "https://api.openweathermap.org/data/2.5/onecall?lat=" . $latitude . "&lon=". $longitude . "&units=metric&exclude=hourly,minutely&appid=" . $this->apiKey);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
     }

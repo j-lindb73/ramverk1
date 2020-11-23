@@ -85,7 +85,7 @@ class WeatherController implements ContainerInjectableInterface
         $locationInfo = $geoLocation->getGeoLocation();
 
 
-        // Get Weather information
+        // Get Weather information Forecast
         if ($geoLocation->geoLocationOK() == true) {
             $weatherRequest = new WeatherRequest("openweathermap");
             $weatherRequest->setDI($this->di);
@@ -93,13 +93,19 @@ class WeatherController implements ContainerInjectableInterface
             $weatherRequest->checkWeather($locationInfo->latitude, $locationInfo->longitude);
             $weatherInfo = (array)$weatherRequest->getWeather();
             
+        // Get Weather information Historical Data
+
+            $weatherInfoHist = array("weatherInfoHistorical" => $weatherRequest->checkWeatherMulti($locationInfo->latitude, $locationInfo->longitude));
+            $weatherInfo = array_merge($weatherInfo, $weatherInfoHist);
             
             // Merge location data with ip data
             $data = array_merge($data, (array)$locationInfo);
         }
-
+        
         if ($ipAddress->isValid() && $geoLocation->geoLocationOK()) {
             $page->add("weather/validIP", $data);
+            
+            $weatherInfo = array_merge($weatherInfo, (array)$weatherInfoHist);
             $page->add("weather/weather", $weatherInfo);
         } else {
             $page->add("weather/notvalidWeather", $data);
@@ -151,7 +157,7 @@ class WeatherController implements ContainerInjectableInterface
         $locationInfo = $geoLocation->getGeoLocation();
 
 
-        // Get Weather information
+        // Get Weather information Forecast
         if ($geoLocation->geoLocationOK() == true) {
             $weatherRequest = new WeatherRequest("openweathermap");
             $weatherRequest->setDI($this->di);
@@ -159,13 +165,19 @@ class WeatherController implements ContainerInjectableInterface
             $weatherRequest->checkWeather($locationInfo->latitude, $locationInfo->longitude);
             $weatherInfo = (array)$weatherRequest->getWeather();
             
+        // Get Weather information Historical Data
+
+            $weatherInfoHist = array("weatherInfoHistorical" => $weatherRequest->checkWeatherMulti($locationInfo->latitude, $locationInfo->longitude));
+            $weatherInfo = array_merge($weatherInfo, $weatherInfoHist);
             
             // Merge location data with ip data
             $data = array_merge($data, (array)$locationInfo);
         }
-
+        
         if ($ipAddress->isValid() && $geoLocation->geoLocationOK()) {
             $page->add("weather/validIP", $data);
+            
+            $weatherInfo = array_merge($weatherInfo, (array)$weatherInfoHist);
             $page->add("weather/weather", $weatherInfo);
         } else {
             $page->add("weather/notvalidWeather", $data);
