@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Lefty\Weather;
 
 use Anax\Commons\ContainerInjectableInterface;
@@ -18,22 +17,24 @@ use Anax\Commons\ContainerInjectableTrait;
 
 class WeatherRequest implements ContainerInjectableInterface
 {
-
     use ContainerInjectableTrait;
 
     private $curl = "";
     private $apiKey = "";
-    
+
     public function setAPI(string $key)
     {
         $this->apiKey = $this->di->get("keystore")->getKey($key);
     }
 
-    public function checkWeather(string $latitude, string $longitude)
+    public function checkWeather(object $geoLocation)
     {
-        // $this->apiKey = $this->di->get("keystore")->getKey("openweatermap");
+        // var_dump($geoLocation);
+        // var_dump($geoLocation->getGeoLocation()["latitude"]);
+        $lon = $geoLocation->getGeoLocation()->longitude;
+        $lat = $geoLocation->getGeoLocation()->latitude;
         $this->geoInitCurl();
-        $this->geoSetOptCurl($latitude, $longitude);
+        $this->geoSetOptCurl($lat, $lon);
         $this->geoExecuteCurl();
         $this->geoCloseCurl();
     }
@@ -42,10 +43,10 @@ class WeatherRequest implements ContainerInjectableInterface
     {
         $multiRequests = [];
 
-        for ($i=0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $unixTime = time() - ($i * 24 * 60 * 60);
-      
-            $multiRequests[] = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' . $latitude . '&lon=' .$longitude .'&dt=' . $unixTime . '&units=metric&appid=' . $this->apiKey;
+
+            $multiRequests[] = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' . $latitude . '&lon=' . $longitude . '&dt=' . $unixTime . '&units=metric&appid=' . $this->apiKey;
         }
 
         $multiHandle = curl_multi_init();
@@ -67,7 +68,7 @@ class WeatherRequest implements ContainerInjectableInterface
         foreach ($multiRequests as $i => $url) {
             $res[$i] = json_decode(curl_multi_getcontent($curlArray[$i]));
         }
-       
+
         foreach ($multiRequests as $i => $url) {
             curl_multi_remove_handle($multiHandle, $curlArray[$i]);
         }
@@ -79,24 +80,24 @@ class WeatherRequest implements ContainerInjectableInterface
     {
         $this->curl = curl_init();
     }
- 
+
     private function geoSetOptCurl($latitude, $longitude)
     {
 
-        curl_setopt($this->curl, CURLOPT_URL, "https://api.openweathermap.org/data/2.5/onecall?lat=" . $latitude . "&lon=". $longitude . "&units=metric&exclude=hourly,minutely&appid=" . $this->apiKey);
+        curl_setopt($this->curl, CURLOPT_URL, "https://api.openweathermap.org/data/2.5/onecall?lat=" . $latitude . "&lon=" . $longitude . "&units=metric&exclude=hourly,minutely&appid=" . $this->apiKey);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
     }
-    
+
     private function geoExecuteCurl()
     {
         $this->geoLocation = json_decode(curl_exec($this->curl));
     }
-    
+
     private function geoCloseCurl()
     {
         curl_close($this->curl);
     }
-    
+
     public function getWeather()
     {
         return $this->geoLocation;
