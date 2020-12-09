@@ -52,7 +52,7 @@ class DeleteForm extends FormModel
         $book = new Book();
         $book->setDb($this->di->get("dbqb"));
 
-        $books = ["-1" => "Select an item..."];
+        $books = ["-1" => "Välj bok..."];
         foreach ($book->findAll() as $obj) {
             $books[$obj->id] = "{$obj->title} ({$obj->id})";
         }

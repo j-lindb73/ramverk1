@@ -22,7 +22,7 @@ class CreateForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Details of the item",
+                "legend" => "Detaljer",
             ],
             [
                 "author" => [
@@ -42,7 +42,7 @@ class CreateForm extends FormModel
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Create item",
+                    "value" => "Lägg till",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]

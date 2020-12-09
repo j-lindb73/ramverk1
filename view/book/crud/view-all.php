@@ -18,15 +18,15 @@ $urlToDelete = url("book/delete");
 
 
 
-?><h1>View all items</h1>
+?><h1>Visa alla böcker</h1>
 
 <p>
-    <a href="<?= $urlToCreate ?>">Create</a> | 
-    <a href="<?= $urlToDelete ?>">Delete</a>
+    <a href="<?= $urlToCreate ?>">Lägg till</a> | 
+    <a href="<?= $urlToDelete ?>">Ta bort</a>
 </p>
 
 <?php if (!$items) : ?>
-    <p>There are no items to show.</p>
+    <p>Det finns inga böcker.</p>
 <?php
     return;
 endif;
