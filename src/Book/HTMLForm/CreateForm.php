@@ -25,12 +25,17 @@ class CreateForm extends FormModel
                 "legend" => "Details of the item",
             ],
             [
-                "column1" => [
+                "author" => [
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],
                         
-                "column2" => [
+                "title" => [
+                    "type" => "text",
+                    "validation" => ["not_empty"],
+                ],
+                        
+                "image" => [
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],
@@ -56,8 +61,9 @@ class CreateForm extends FormModel
     {
         $book = new Book();
         $book->setDb($this->di->get("dbqb"));
-        $book->column1  = $this->form->value("column1");
-        $book->column2 = $this->form->value("column2");
+        $book->author  = $this->form->value("author");
+        $book->title = $this->form->value("title");
+        $book->image = $this->form->value("image");
         $book->save();
         return true;
     }
