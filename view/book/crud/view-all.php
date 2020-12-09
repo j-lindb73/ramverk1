@@ -46,7 +46,7 @@ endif;
         </td>
         <td><?= $item->author ?></td>
         <td><?= $item->title ?></td>
-        <td><?= $item->image ?></td>
+        <td><a href='<?= $item->image ?>'><?= $item->title ?></a> </td>
     </tr>
     <?php endforeach; ?>
 </table>
