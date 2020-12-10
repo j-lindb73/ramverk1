@@ -26,16 +26,19 @@ class CreateForm extends FormModel
             ],
             [
                 "author" => [
+                    "label" => "Författare",
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],
                         
                 "title" => [
+                    "label" => "Titel",
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],
                         
                 "image" => [
+                    "label" => "Bild",
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],

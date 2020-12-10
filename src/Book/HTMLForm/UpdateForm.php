@@ -36,18 +36,21 @@ class UpdateForm extends FormModel
 
                 "author" => [
                     "type" => "text",
+                    "label" => "Författare",
                     "validation" => ["not_empty"],
                     "value" => $book->author,
                 ],
 
                 "title" => [
                     "type" => "text",
+                    "label" => "Titel",
                     "validation" => ["not_empty"],
                     "value" => $book->title,
                 ],
 
                 "image" => [
                     "type" => "text",
+                    "label" => "Bild",
                     "validation" => ["not_empty"],
                     "value" => $book->image,
                 ],
@@ -60,12 +63,16 @@ class UpdateForm extends FormModel
 
                 "reset" => [
                     "type"      => "reset",
+                    "value"      => "Återställ",
                 ],
             ]
         );
     }
 
-
+    public function debug()
+    {
+        var_dump($this->form["image"]);
+    }
 
     /**
      * Get details on item to load form with.

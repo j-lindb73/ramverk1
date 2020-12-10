@@ -22,18 +22,18 @@ class DeleteForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Delete an item",
+                "legend" => "Ta bort en bok",
             ],
             [
                 "select" => [
                     "type"        => "select",
-                    "label"       => "Select item to delete:",
+                    "label"       => "Välj bok att ta bort:",
                     "options"     => $this->getAllItems(),
                 ],
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Delete item",
+                    "value" => "Ta bort",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]
