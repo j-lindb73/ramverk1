@@ -69,9 +69,14 @@ class UpdateForm extends FormModel
         );
     }
 
-    public function debug()
+
+    // Skapade denna funktion för att komma åt de metoder som 
+    // ligger i Form-objektet. Behovet kom sig av att jag ville 
+    // nå ett enskilt element i controllern
+    public function getElement($element)
     {
-        var_dump($this->form["image"]);
+        
+        return $this->form->getElement($element);
     }
 
     /**

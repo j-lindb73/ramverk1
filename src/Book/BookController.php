@@ -122,8 +122,15 @@ class BookController implements ContainerInjectableInterface
         $form = new UpdateForm($this->di, $id);
         $form->check();
 
+
+        // Använder en metod i UpdateForm.php som gör det möjligt
+        // att använda metoder i Form-objektet, i detta fall länken
+        // till bilden. Används för tillfället inte i vyn...       
+        $image_link = $form->getElement("image")->attributes["value"];
+        
         $page->add("book/crud/update", [
             "form" => $form->getHTML(),
+            "image_link" => $image_link
         ]);
 
         return $page->render([
